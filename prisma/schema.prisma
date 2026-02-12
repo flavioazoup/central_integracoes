@@ -1,0 +1,197 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  clerkId   String   @unique // External ID from Clerk (User or Org)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customers    Customer[]
+  integrations Integration[]
+  syncJobs     SyncJob[]
+  logs         Log[]
+  products     Product[]
+  orders       Order[]
+  productMaps  ProductMap[]
+  orderMaps    OrderMap[]
+}
+
+model Customer {
+  id       String @id @default(cuid())
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  name     String
+  email    String?
+  phone    String?
+  document String? // CPF/CNPJ for Brazilian customers
+  notes    String?
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  integrations Integration[]
+  products     Product[]
+  orders       Order[]
+
+  @@index([tenantId])
+  @@index([tenantId, isActive])
+}
+
+model Integration {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  provider   String // "nuvemshop", "bling", etc.
+  name       String?
+  config     Json // Store access tokens, settings, etc.
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  syncJobs    SyncJob[]
+  productMaps ProductMap[]
+  orderMaps   OrderMap[]
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, provider])
+}
+
+model SyncJob {
+  id            String      @id @default(cuid())
+  tenantId      String
+  tenant        Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  integrationId String
+  integration   Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  type          String // "products", "orders", "inventory"
+  status        String // "pending", "processing", "completed", "failed"
+  message       String?
+  data          Json? // Optional payload or result data
+  startedAt     DateTime    @default(now())
+  completedAt   DateTime?
+
+  logs Log[]
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  jobId     String?
+  job       SyncJob? @relation(fields: [jobId], references: [id])
+  level     String // "info", "warn", "error"
+  message   String
+  details   Json?
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  images      String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  variants ProductVariant[]
+  mappings ProductMap[]
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  sku        String
+  price      Decimal
+  stock      Int
+  attributes Json? // { color: "blue", size: "M" }
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productId, sku])
+}
+
+model Order {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  customerName  String?
+  customerEmail String?
+  status        String
+  total         Decimal
+  items         Json // Simplified for now: [{ sku: "ABC", quantity: 1, price: 10 }]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mappings OrderMap[]
+}
+
+model ProductMap {
+  id       String @id @default(cuid())
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  // Link to internal Product
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // Link to specific Integration
+  integrationId String?
+  integration   Integration? @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  remoteId String // ID in the external system
+  provider String // "nuvemshop", "bling"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, provider, remoteId])
+  @@index([tenantId, productId])
+  @@index([tenantId, integrationId])
+}
+
+model OrderMap {
+  id       String @id @default(cuid())
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  // Link to internal Order
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  // Link to specific Integration
+  integrationId String?
+  integration   Integration? @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  remoteId String // ID in the external system
+  provider String // "nuvemshop", "bling"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tenantId, provider, remoteId])
+  @@index([tenantId, orderId])
+  @@index([tenantId, integrationId])
+}
