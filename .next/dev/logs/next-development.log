@@ -113,3 +113,10 @@ You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token
 [05:12:49.272] Server  LOG     ✓ Compiled in 562ms
 [05:13:49.079] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
 [05:13:49.438] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[05:21:13.865] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[05:21:14.241] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:21:14.462] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
