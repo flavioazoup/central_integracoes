@@ -1,0 +1,115 @@
+[00:00:02.089] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:02.369] Server  LOG     ✓ Ready in 1781ms
+[00:00:04.894] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[00:00:05.704] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:05.874] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.070] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:00:06.122] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:00:16.381] Browser ERROR   [1m[36m[Clerk Debug][0m [2m2026-02-12T16:40:29.051Z[0m [31mERROR[0m[90m[fapiClient][0m: [37mrequest failed[0m[2m {"method":"POST","path":"/client/sign_ins","status":422}[0m
+[00:04:24.039] Browser ERROR   [1m[36m[Clerk Debug][0m [2m2026-02-12T16:44:36.717Z[0m [31mERROR[0m[90m[fapiClient][0m: [37mrequest failed[0m[2m {"method":"POST","path":"/client/sign_ins","status":422}[0m
+[00:05:35.093] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:35.325] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:05:36.679] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:38.584] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:06:22.652] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. NuvemShopForm
+[00:10:10.027] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[00:58:32.482] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[00:58:45.938] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:46.250] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:58:46.613] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. NuvemShopForm
+[00:58:53.105] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:53.411] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:58:53.411] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. NuvemShopForm
+[01:07:23.279] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:07:23.758] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[01:07:23.758] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. NuvemShopForm
+[04:19:00.582] Server  LOG     ✓ Compiled in 2.1s
+[04:19:07.997] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[04:19:12.225] Server  ERROR   ⨯ ReferenceError: NuvemShopForm is not defined
+[04:19:12.698] Browser ERROR   uncaughtError: ReferenceError: NuvemShopForm is not defined
+[04:19:14.538] Server  LOG     ✓ Compiled in 1ms
+[04:19:14.982] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[04:19:15.628] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:19:16.569] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:19:16.569] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. IntegrationForm
+[04:21:16.748] Server  LOG     ✓ Compiled in 196ms
+[04:21:20.555] Server  LOG     ✓ Compiled in 93ms
+[04:21:23.227] Server  LOG     ✓ Compiled in 498ms
+[04:21:25.303] Server  LOG     ✓ Compiled in 1ms
+[04:21:25.631] Server  ERROR   ⨯ ReferenceError: IntegrationForm is not defined
+[04:21:25.892] Browser ERROR   uncaughtError: ReferenceError: IntegrationForm is not defined
+[04:21:27.630] Server  LOG     ✓ Compiled in 4ms
+[04:21:27.948] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[04:21:27.994] Server  ERROR   ⨯ ReferenceError: IntegrationForm is not defined
+[04:21:28.416] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:21:28.685] Browser ERROR   uncaughtError: ReferenceError: IntegrationForm is not defined
+[04:21:28.685] Browser ERROR   uncaughtError: TypeError: Failed to execute 'measure' on 'Performance': '​IntegrationsPage' cannot have a negative time stamp.
+[04:21:28.841] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:21:29.349] Server  LOG     ✓ Compiled in 31ms
+[04:21:30.786] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:21:30.915] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:21:32.364] Server  LOG     ✓ Compiled in 82ms
+[04:21:39.801] Server  LOG     ✓ Compiled in 60ms
+[04:22:27.707] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. IntegrationForm
+[04:39:01.605] Server  LOG     ✓ Compiled in 323ms
+[04:39:01.804] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[04:39:06.862] Server  LOG     ✓ Compiled in 630ms
+[04:39:16.468] Server  LOG     ✓ Compiled in 52ms
+[04:39:21.677] Server  LOG     ✓ Compiled in 62ms
+[04:39:25.391] Server  LOG     ✓ Compiled in 59ms
+[04:39:58.927] Server  LOG     ✓ Compiled in 758ms
+[04:40:16.134] Server  LOG     ✓ Finished filesystem cache database compaction in 14.3s
+[04:48:04.021] Server  LOG     ✓ Compiled in 261ms
+[04:48:04.830] Server  LOG     ✓ Compiled in 90ms
+[04:48:31.717] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:48:32.114] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:53:37.884] Server  LOG     ✓ Compiled in 196ms
+[04:53:38.841] Server  LOG     ✓ Compiled in 79ms
+[04:53:39.394] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[04:55:10.899] Browser ERROR   ReactDOM.useFormState has been renamed to React.useActionState. Please update %s to use React.useActionState. IntegrationForm
+[04:56:12.012] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:56:12.382] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:56:22.139] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:56:22.574] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:56:23.429] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:56:23.668] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[04:57:30.896] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:57:31.180] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[05:04:01.626] Server  LOG     
+
+[Clerk]: You are running in keyless mode.
+You can claim your keys by visiting https://dashboard.clerk.com/apps/claim?token=8acv0y4xr6o2f4xjasqx1m075vw3w0ssrb63jgpd&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+[05:04:03.955] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:04:04.174] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[05:04:07.952] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:04:08.188] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[05:06:08.800] Server  LOG     ○ Compiling /_not-found/page ...
+[05:12:43.026] Server  LOG     ✓ Compiled in 279ms
+[05:12:49.272] Server  LOG     ✓ Compiled in 562ms
+[05:13:49.079] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:13:49.438] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview

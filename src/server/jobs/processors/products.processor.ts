@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
-import { NuvemShopAdapter } from '@/server/adapters/nuvemshop.adapter'
+import { createPlatformAdapter } from '@/server/adapters/adapter-factory'
 import { SyncJobData } from '../queue'
 
 export async function processProductsJob(jobData: SyncJobData) {
@@ -30,12 +30,7 @@ export async function processProductsJob(jobData: SyncJobData) {
         const customerId = integration.customerId
 
         // 3. Instantiate Adapter
-        let adapter
-        if (integration.provider === 'nuvemshop') {
-            adapter = new NuvemShopAdapter(integration.config as any)
-        } else {
-            throw new Error(`Unsupported provider: ${integration.provider}`)
-        }
+        const adapter = createPlatformAdapter(integration.provider, integration.config)
 
         // 4. Fetch Products and Sync
         logger.info({ tenantId, jobId, customerId, message: 'Starting full product sync' })

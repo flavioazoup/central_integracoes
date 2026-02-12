@@ -1,4 +1,4 @@
-import { NuvemShopForm } from './nuvemshop-form'
+import { IntegrationModal } from './integration-modal'
 import { getIntegrations } from '@/server/actions/integrations'
 import { getActiveCustomersAction } from '@/server/actions/customers'
 import { Activity, CheckCircle2, XCircle, Building2 } from 'lucide-react'
@@ -18,19 +18,23 @@ export default async function IntegrationsPage({ searchParams }: IntegrationsPag
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-gray-900">Integrations</h1>
+                <IntegrationModal customers={customers} />
             </div>
 
             {/* Customer Filter */}
             <CustomerFilter customers={customers} currentCustomerId={customerId} />
 
-            <div className="grid gap-6 md:grid-cols-2">
-                {/* Active Integrations List */}
-                <div className="space-y-4">
-                    <h2 className="text-lg font-medium text-gray-900">Active Integrations</h2>
-                    {integrations.length === 0 ? (
-                        <p className="text-sm text-gray-500">No active integrations found.</p>
-                    ) : (
-                        integrations.map((integration) => (
+            {/* Active Integrations List */}
+            <div className="space-y-4">
+                <h2 className="text-lg font-medium text-gray-900">Integrações Ativas</h2>
+                {integrations.length === 0 ? (
+                    <div className="rounded-lg bg-gray-50 p-8 text-center">
+                        <p className="text-sm text-gray-500 mb-4">Nenhuma integração encontrada.</p>
+                        <IntegrationModal customers={customers} />
+                    </div>
+                ) : (
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {integrations.map((integration) => (
                             <div
                                 key={integration.id}
                                 className="flex flex-col gap-3 rounded-lg bg-white p-4 shadow-sm"
@@ -65,15 +69,9 @@ export default async function IntegrationsPage({ searchParams }: IntegrationsPag
                                 {/* Sync Actions */}
                                 <IntegrationActions integrationId={integration.id} />
                             </div>
-                        ))
-                    )}
-                </div>
-
-                {/* Configuration Form */}
-                <div className="space-y-4">
-                    <h2 className="text-lg font-medium text-gray-900">Configure NuvemShop</h2>
-                    <NuvemShopForm customers={customers} />
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     )

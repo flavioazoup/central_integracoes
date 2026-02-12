@@ -1,80 +1,81 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { getCurrentTenant } from '@/server/services/tenant.service'
 import { getCustomerById } from '@/server/services/customer.service'
+import {
+    validateIntegrationConfig,
+    extractConfigFromFormData,
+    getDefaultIntegrationName,
+    type IntegrationProvider,
+} from './integration-schemas'
 
-const NuvemShopSchema = z.object({
-    customerId: z.string().min(1, 'Cliente é obrigatório'),
-    accessToken: z.string().min(1, 'Access token is required'),
-    userId: z.string().min(1, 'Store ID is required'),
-    userAgent: z.string().min(1, 'User Agent is required'),
-})
-
-export async function saveNuvemShopIntegration(prevState: any, formData: FormData) {
+export async function saveIntegration(prevState: any, formData: FormData) {
     const tenant = await getCurrentTenant()
     if (!tenant) {
         return { message: 'Unauthorized' }
     }
 
-    const rawData = {
-        customerId: formData.get('customerId'),
-        accessToken: formData.get('accessToken'),
-        userId: formData.get('userId'),
-        userAgent: formData.get('userAgent'),
+    const provider = formData.get('provider') as IntegrationProvider
+    if (!provider) {
+        return { message: 'Provider é obrigatório' }
     }
 
-    const validatedFields = NuvemShopSchema.safeParse(rawData)
+    const rawData = extractConfigFromFormData(provider, formData)
+    const validation = validateIntegrationConfig(provider, rawData)
 
-    if (!validatedFields.success) {
+    if (!validation.success) {
         return {
-            errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Validation failed',
+            errors: validation.errors || {},
+            message: 'Validação falhou',
         }
     }
 
+    const { customerId, ...configData } = validation.data!
+
     // Verify customer belongs to this tenant
-    const customer = await getCustomerById(validatedFields.data.customerId, tenant.id)
+    const customer = await getCustomerById(customerId, tenant.id)
     if (!customer) {
-        return { message: 'Customer not found or access denied' }
+        return { message: 'Cliente não encontrado ou acesso negado' }
     }
+
+    // Extract config object (remove customerId and provider from config)
+    const { provider: _, ...config } = configData
 
     try {
         await prisma.integration.upsert({
             where: {
                 customerId_provider: {
-                    customerId: validatedFields.data.customerId,
-                    provider: 'nuvemshop',
+                    customerId,
+                    provider,
                 },
             },
             update: {
-                config: {
-                    accessToken: validatedFields.data.accessToken,
-                    userId: validatedFields.data.userId,
-                    userAgent: validatedFields.data.userAgent,
-                },
+                config,
                 isActive: true,
             },
             create: {
                 tenantId: tenant.id,
-                customerId: validatedFields.data.customerId,
-                provider: 'nuvemshop',
-                name: 'NuvemShop Store',
-                config: {
-                    accessToken: validatedFields.data.accessToken,
-                    userId: validatedFields.data.userId,
-                    userAgent: validatedFields.data.userAgent,
-                },
+                customerId,
+                provider,
+                name: getDefaultIntegrationName(provider),
+                config,
             },
         })
 
         revalidatePath('/dashboard/integrations')
         return { message: 'Success' }
     } catch (error) {
-        return { message: 'Failed to save integration' }
+        console.error('Error saving integration:', error)
+        return { message: 'Falha ao salvar integração' }
     }
+}
+
+// Mantido para compatibilidade (pode ser removido depois)
+export async function saveNuvemShopIntegration(prevState: any, formData: FormData) {
+    formData.set('provider', 'nuvemshop')
+    return saveIntegration(prevState, formData)
 }
 
 export async function getIntegrations(customerId?: string) {

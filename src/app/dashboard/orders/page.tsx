@@ -15,30 +15,33 @@ export default async function OrdersPage({
     }
 
     const { customerId, integrationId } = await searchParams
+    const hasIntegrationSelected = integrationId && integrationId !== 'all'
 
-    // Fetch filters data
-    const [customers, integrations] = await Promise.all([
+    // Sempre carrega apenas opções dos filtros (leve)
+    const [customers, integrationsRaw] = await Promise.all([
         prisma.customer.findMany({ where: { tenantId: tenant.id }, select: { id: true, name: true } }),
-        prisma.integration.findMany({ where: { tenantId: tenant.id }, select: { id: true, name: true, provider: true } }),
+        prisma.integration.findMany({ where: { tenantId: tenant.id }, select: { id: true, name: true, provider: true, customerId: true } }),
     ])
+    const integrations = (customerId && customerId !== 'all')
+        ? integrationsRaw.filter((i) => i.customerId === customerId)
+        : integrationsRaw
 
-    // Fetch orders with filters
-    const orders = await prisma.order.findMany({
-        where: {
-            tenantId: tenant.id,
-            ...(customerId && customerId !== 'all' ? { customerId } : {}),
-            ...(integrationId && integrationId !== 'all' ? { mappings: { some: { integrationId } } } : {}),
-        },
-        include: {
-            customer: {
-                select: {
-                    name: true,
-                },
+    // Carrega pedidos somente quando uma integração estiver selecionada
+    let orders: Awaited<ReturnType<typeof prisma.order.findMany>> = []
+    if (hasIntegrationSelected) {
+        orders = await prisma.order.findMany({
+            where: {
+                tenantId: tenant.id,
+                ...(customerId && customerId !== 'all' ? { customerId } : {}),
+                mappings: { some: { integrationId } },
             },
-            mappings: true,
-        },
-        orderBy: { createdAt: 'desc' },
-    })
+            include: {
+                customer: { select: { name: true } },
+                mappings: true,
+            },
+            orderBy: { createdAt: 'desc' },
+        })
+    }
 
     // Serialization fix for Decimal
     const serializableOrders = orders.map(order => ({
@@ -54,9 +57,11 @@ export default async function OrdersPage({
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
-                <div className="text-sm text-gray-500">
-                    {orders.length} order{orders.length !== 1 ? 's' : ''} shown
-                </div>
+                {hasIntegrationSelected && (
+                    <div className="text-sm text-gray-500">
+                        {orders.length} pedido{orders.length !== 1 ? 's' : ''}
+                    </div>
+                )}
             </div>
 
             <DataFilter
@@ -64,12 +69,20 @@ export default async function OrdersPage({
                 integrations={integrations.map(i => ({ id: i.id, name: i.name || `${i.provider} (${i.id.slice(-4)})` }))}
             />
 
-            {orders.length === 0 ? (
+            {!hasIntegrationSelected ? (
+                <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50/50 p-12 text-center">
+                    <ShoppingCart className="mx-auto h-14 w-14 text-gray-300" />
+                    <h3 className="mt-3 text-base font-semibold text-gray-700">Selecione uma integração</h3>
+                    <p className="mt-1 text-sm text-gray-500 max-w-sm mx-auto">
+                        Escolha uma integração no filtro acima para carregar os pedidos. Assim a lista não demora quando há muitas integrações.
+                    </p>
+                </div>
+            ) : orders.length === 0 ? (
                 <div className="rounded-lg bg-white p-12 text-center shadow-sm">
                     <ShoppingCart className="mx-auto h-12 w-12 text-gray-400" />
-                    <h3 className="mt-2 text-sm font-semibold text-gray-900">No orders found</h3>
+                    <h3 className="mt-2 text-sm font-semibold text-gray-900">Nenhum pedido encontrado</h3>
                     <p className="mt-1 text-sm text-gray-500">
-                        Try adjusting your filters or sync orders from your integrations.
+                        Ajuste os filtros ou sincronize pedidos a partir das integrações.
                     </p>
                 </div>
             ) : (

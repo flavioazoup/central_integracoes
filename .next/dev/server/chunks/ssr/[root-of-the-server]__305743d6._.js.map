@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///Users/flavioazoup/Desenvolvimento/central_integracoes/src/app/page.tsx"],"sourcesContent":["import { auth } from '@clerk/nextjs/server'\nimport { redirect } from 'next/navigation'\n\nexport default async function Home() {\n  const { userId } = await auth()\n\n  // If user is authenticated, redirect to dashboard\n  if (userId) {\n    redirect('/dashboard')\n  }\n\n  // If not authenticated, redirect to sign-in\n  redirect('/sign-in')\n}\n"],"names":[],"mappings":";;;;AAAA;AACA;AAAA;;;AAEe,eAAe;IAC5B,MAAM,EAAE,MAAM,EAAE,GAAG,MAAM,IAAA,2LAAI;IAE7B,kDAAkD;IAClD,IAAI,QAAQ;QACV,IAAA,iMAAQ,EAAC;IACX;IAEA,4CAA4C;IAC5C,IAAA,iMAAQ,EAAC;AACX"}}]
+}
